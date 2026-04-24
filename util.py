@@ -1,11 +1,14 @@
 import random
 
 # generates a standard sudoku board that has self-consistent 3x3 boxes
-def generate_board():
+def generate_board(fixed: list):
     board = [[0] * 9 for _ in range(9)]
 
     for i in range (0, 9, 3):
         for j in range(0, 9, 3):
+            if fixed[i][j] != 0:
+                board[i][j] = fixed[i][j]
+                continue
             arr = list(range(1, 10))
             random.shuffle(arr)
             for k in range(9):
@@ -80,14 +83,18 @@ def copy_board(original: list):
 
 def main():
     boards = list()
-    with open("valid boards.txt") as f:
-        for line in f:
-            boards.append(read_board(line))
+    try:
+        with open("valid boards.txt") as f:
+            for line in f:
+                boards.append(read_board(line))
+    except:
+        print("cant find file")
             
 
-    boards.append(generate_board())
-    changed = swap(boards[0], boards[1], (1, 2, 3))
-    boards.append(changed)
+    boards.append(generate_board("0" * 81))
+    if len(boards) >= 2:
+        changed = swap(boards[0], boards[1], (1, 2, 3))
+        boards.append(changed)
     for board in boards:
         for i in range(9):
             for j in range(9):
@@ -102,9 +109,6 @@ def main():
         print()
         print(eval(board))
         print()
-
-
-
 
 
 main()
