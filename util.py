@@ -1,4 +1,4 @@
-import random
+import random, heapq
 
 # generates a standard sudoku board that has self-consistent 3x3 boxes
 def generate_board(fixed: list):
@@ -6,17 +6,25 @@ def generate_board(fixed: list):
 
     for i in range (0, 9, 3):
         for j in range(0, 9, 3):
-            if fixed[i][j] != 0:
-                board[i][j] = fixed[i][j]
-                continue
-            arr = list(range(1, 10))
-            random.shuffle(arr)
+            nine = set(range(1, 10))
             for k in range(9):
                 row = i + (k // 3)
                 col = j + (k % 3)
-                board[row][col] = arr[k]
+                if fixed[row][col] != 0 and fixed[row][col] in nine:
+                    nine.remove(fixed[row][col])
+            
+            arr = list(nine)
+            random.shuffle(arr)
+            count = 0
+            for k in range(9):
+                row = i + (k // 3)
+                col = j + (k % 3)
+                if fixed[row][col] != 0:
+                    board[row][col] = fixed[row][col]
+                    count += 1
+                else:
+                    board[row][col] = arr[k - count]
                 
-
     return board
 
 
@@ -67,9 +75,23 @@ def read_board(board_str: str):
         for j in range(9):
             c = board_str[i * 9 + j]
             if c != ".":
-                board[i][j] = c
+                board[i][j] = int(c)
 
     return board
+
+
+def subplex(plex: list, q: int):
+    subplex = []
+    n = len(plex)
+    for j in range(n):
+        plex[j].set_key(2 * (n + 1 - j) / (n * (n + 1)))
+
+    pq = heapq.heapify_max(plex)
+
+    for _ in range(q):
+        subplex.append(pq.heappop_max())
+    
+    return subplex
 
 
 def copy_board(original: list):
@@ -91,7 +113,8 @@ def main():
         print("cant find file")
             
 
-    boards.append(generate_board("0" * 81))
+    default_board = '.9.2.1.....4..8.7..7..69..814...58...6.....2...86...472..34..6..3.1..7.....8.2.1.'
+    boards.append(generate_board(read_board(default_board)))
     if len(boards) >= 2:
         changed = swap(boards[0], boards[1], (1, 2, 3))
         boards.append(changed)
