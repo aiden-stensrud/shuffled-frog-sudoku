@@ -103,14 +103,25 @@ def copy_board(original: list):
     return copy
 
 
+def print_board(board: list):
+    for i in range(9):
+        for j in range(9):
+            print(board[i][j], end = " ")
+            if (j + 1) % 3 == 0 and j != 8:
+                print("|", end = " ")
+            
+        print()
+        if (i + 1) % 3 == 0 and i != 8:
+            print("---------------------")
+
+    print()
+    print(eval(board))
+    print()
+
+
 def main():
     boards = list()
-    try:
-        with open("valid boards.txt") as f:
-            for line in f:
-                boards.append(read_board(line))
-    except:
-        print("cant find file")
+    boards.append(read_board('327951864195684372846723915659472138471538296283169547738216459962345781514897623'))
             
 
     default_board = '.9.2.1.....4..8.7..7..69..814...58...6.....2...86...472..34..6..3.1..7.....8.2.1.'
@@ -119,20 +130,7 @@ def main():
         changed = swap(boards[0], boards[1], (1, 2, 3))
         boards.append(changed)
     for board in boards:
-        for i in range(9):
-            for j in range(9):
-                print(board[i][j], end = " ")
-                if (j + 1) % 3 == 0 and j != 8:
-                    print("|", end = " ")
-            
-            print()
-            if (i + 1) % 3 == 0 and i != 8:
-                print("---------------------")
-    
-        print()
-        print(eval(board))
-        print()
+        print_board(board)
 
 
-main()
-
+#main()
