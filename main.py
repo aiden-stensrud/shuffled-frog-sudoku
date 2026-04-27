@@ -1,7 +1,9 @@
 from memeplex import partition_memeplexes, select_submemeplex, improve_submemeplex
 from Frog import Frog
 
-
+improve_by_local_count = 0
+improve_by_global_count = 0
+improve_by_random_count = 0
 
 def read_input():
    board_string = input()
@@ -28,6 +30,9 @@ def SFLA(F, M, Q, N, S, fixed):
    # Initialize F new frogs
    all_frogs = [Frog(fixed) for _ in range(F)]
    global_best = None
+   global improve_by_local_count
+   global improve_by_global_count
+   global improve_by_random_count
 
    for _ in range(S): 
       memeplexes, global_best = partition_memeplexes(all_frogs, M)
@@ -40,9 +45,13 @@ def SFLA(F, M, Q, N, S, fixed):
             sub_meme, local_best, local_worst = select_submemeplex(m, Q)
 
             # Makes frog better
-            if not improve_submemeplex(sub_meme, global_best, local_best, local_worst):
+            did_local_improve, did_global_improve = improve_submemeplex(sub_meme, global_best, local_best, local_worst)
+            if did_local_improve: improve_by_local_count += 1
+            elif did_global_improve: improve_by_global_count += 1
+            else:
                local_worst.random_grid(fixed)
                local_worst.evaluate()
+               improve_by_random_count += 1
             
             if local_worst.coll == 0:
                return local_worst
@@ -57,8 +66,8 @@ def SFLA(F, M, Q, N, S, fixed):
 # Reads input
 fixed, max_solutions = read_input()
 
-F = 1000           # total frogs
-M = 50           # memeplexes
+F = 100           # total frogs
+M = 5           # memeplexes
 Q = 10           # submemeplex size
 N = 100           # evolution steps
 S = 20           # number of times the memeplexes are shuffled
@@ -70,3 +79,6 @@ best_solution = SFLA(F, M, Q, N, S, fixed)
 
 # Prints the output
 best_solution.print_board()
+print(f"improve by local count: {improve_by_local_count}")
+print(f"improve by global count: {improve_by_global_count}")
+print(f"improve by random count: {improve_by_random_count}")

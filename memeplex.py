@@ -4,6 +4,7 @@ from copy import deepcopy
 import random, heapq
 
 
+
 # Partitions the list of frogs into M memeplexes round-robin style
 def partition_memeplexes(frogs: list, M: int):
     plexes = []
@@ -74,15 +75,15 @@ def improve_submemeplex(subplex: list, global_best: Frog, local_best: Frog, wors
     if new_frog.coll < worst.coll:
         worst.board = new_frog.board
         worst.evaluate()
-        return True
+        return True, False
     
     new_frog = improve_frog(worst, global_best)
     if new_frog.coll < worst.coll:
         worst.board = new_frog.board
         worst.evaluate()
-        return True
+        return False, True
     
-    return False
+    return False, False
 
 
 def shuffle_memeplexes(plexes: list):
