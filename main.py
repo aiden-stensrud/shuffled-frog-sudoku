@@ -43,13 +43,11 @@ for _ in range(S):
    memeplexes, global_best = partition_memeplexes(all_frogs)
    for m in memeplexes:                   # For each memeplex
       for _ in range(N):                     # For each evolution step
-         sub_meme = select_submemeplex(m, Q)    
-         local_best = get_local_best(sub_meme)
-         local_worst = get_worst(sub_meme)
+         sub_meme, local_best, local_worst = select_submemeplex(m, Q)
 
          # Makes frog better
          if not improve_submemeplex(sub_meme, global_best, local_best, local_worst):
-            local_worst = Frog(fixed)
+            local_worst.random_grid(fixed)
 
    all_frogs = [item for sublist in memeplexes for item in sublist]
 

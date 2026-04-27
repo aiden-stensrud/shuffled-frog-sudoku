@@ -71,12 +71,14 @@ def improve_frog(worst: Frog, best: Frog):
 def improve_submemeplex(subplex: list, global_best: Frog, local_best: Frog, worst: Frog):
     new_frog = improve_frog(worst, local_best)
     if new_frog.coll < worst.coll:
-        worst = new_frog
+        worst.board = new_frog.board
+        worst.evaluate()
         return True
     
     new_frog = improve_frog(worst, global_best)
     if new_frog.coll < worst.coll:
-        worst = new_frog
+        worst.board = new_frog.board
+        worst.evaluate()
         return True
     
     return False
