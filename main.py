@@ -29,6 +29,12 @@ def SFLA(F, M, Q, N, S, fixed):
 
    # Initialize F new frogs
    all_frogs = [Frog(fixed) for _ in range(F)]
+
+   total = 0
+   for frog in all_frogs:
+      total += frog.coll
+   print(f"The average number of collisions per frog at the start is: {total//F}\n")
+
    global_best = None
    global improve_by_local_count
    global improve_by_global_count
@@ -36,7 +42,9 @@ def SFLA(F, M, Q, N, S, fixed):
 
    for i in range(S): 
       memeplexes, global_best = partition_memeplexes(all_frogs, M)
-      if i == 0: global_best.print_board()
+      if i == 0: 
+         print(f"Global best frog before evolution:")
+         global_best.print_board()
       if global_best.coll == 0:
          return global_best
 
@@ -69,8 +77,8 @@ fixed, max_solutions = read_input()
 F = 1000           # total frogs
 M = 10           # memeplexes
 Q = F//M//2           # submemeplex size
-N = 100           # evolution steps
-S = 200           # number of times the memeplexes are shuffled
+N = 100          # evolution steps
+S = 200          # number of times the memeplexes are shuffled
 
 #assert S * N * M + F <= max_solutions
 
@@ -78,6 +86,7 @@ S = 200           # number of times the memeplexes are shuffled
 best_solution = SFLA(F, M, Q, N, S, fixed)
 
 # Prints the output
+print(f"Global best frog after evolution:")
 best_solution.print_board()
 print(f"improve by local count: {improve_by_local_count}")
 print(f"improve by global count: {improve_by_global_count}")

@@ -54,7 +54,7 @@ def select_submemeplex(original: list, q: int):
 # that have the largest difference in collisions with the worst frog
 def improve_frog(worst: Frog, best: Frog):
     # decide which parts of the frog to improve
-    max_diff = 0
+    '''max_diff = 0
     to_swap = (0, 1)
     for i in range(3):
         if worst.row_colls[i] - best.row_colls[i] > max_diff:
@@ -66,7 +66,10 @@ def improve_frog(worst: Frog, best: Frog):
             max_diff = worst.col_colls[i] - best.col_colls[i]
             to_swap = (i, 3)
 
-    swaps = [to_swap[0] + x * to_swap[1] for x in range(3)]
+    swaps = [to_swap[0] + x * to_swap[1] for x in range(3)]'''
+
+    
+    swaps = [random.randint(1,9)]
 
     new_frog = swap(best, worst, swaps)
     new_frog.evaluate()

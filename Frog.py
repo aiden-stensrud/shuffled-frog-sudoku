@@ -77,7 +77,7 @@ class Frog:
                 print("---------------------")
 
         print()
-        print(self.coll)
+        print(f"Number of collisions: {self.coll}")
         print()
 
 
