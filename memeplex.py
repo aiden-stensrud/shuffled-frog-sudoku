@@ -7,6 +7,7 @@ import random, heapq
 # Partitions the list of frogs into M memeplexes round-robin style
 def partition_memeplexes(frogs: list, M: int):
     plexes = []
+    frogs.sort(key = lambda Frog: Frog.coll)
     for _ in range(M):
         plexes.append(list())
 

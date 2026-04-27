@@ -56,6 +56,23 @@ class Frog:
         self.coll = collisions
    
 
+
+    def print_board(self):
+        for i in range(9):
+            for j in range(9):
+                print(self.board[i][j], end = " ")
+                if (j + 1) % 3 == 0 and j != 8:
+                    print("|", end = " ")
+                
+            print()
+            if (i + 1) % 3 == 0 and i != 8:
+                print("---------------------")
+
+        print()
+        print(eval(self.board))
+        print()
+
+
     # key used for constructing a submemeplex
     def set_key(self, weight):
        self.key = random.random() ** weight
