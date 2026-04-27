@@ -17,7 +17,7 @@ def partition_memeplexes(frogs: list, M: int):
         counter += 1
         counter %= M
 
-    return plexes
+    return plexes, plexes[0][0]
 
 
 # Selects a submemeplex of size qbased on a triangular distribution

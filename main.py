@@ -1,4 +1,4 @@
-from memeplex import partition_memeplexes, select_submemeplex, get_local_best, get_worst, improve_submemeplex
+from memeplex import partition_memeplexes, select_submemeplex, improve_submemeplex
 from Frog import Frog
 
 
@@ -57,13 +57,13 @@ def SFLA(F, M, Q, N, S, fixed):
 # Reads input
 fixed, max_solutions = read_input()
 
-F = 0           # total frogs
-M = 0           # memeplexes
-Q = 0           # submemeplex size
-N = 0           # evolution steps
-S = 0           # number of times the memeplexes are shuffled
+F = 1000           # total frogs
+M = 50           # memeplexes
+Q = 10           # submemeplex size
+N = 9           # evolution steps
+S = 20           # number of times the memeplexes are shuffled
 
-assert S * N * M <= max_solutions
+assert S * N * M + F <= max_solutions
 
 # Run the main algorithm
 best_solution = SFLA(F, M, Q, N, S, fixed)
