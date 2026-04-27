@@ -24,7 +24,7 @@ def partition_memeplexes(frogs: list, M: int):
 # Selects a submemeplex of size qbased on a triangular distribution
 # using the Efraimidis-Spirakis algorithm for weighted sampling
 def select_submemeplex(original: list, q: int):
-    plex = deepcopy(original)
+    '''plex = deepcopy(original)
     subplex = []
     n = len(plex)
     for j in range(n):
@@ -33,7 +33,7 @@ def select_submemeplex(original: list, q: int):
     heapq._heapify_max(plex)
     best_frog = plex[0]
     worst_frog = plex[0]
-
+    print(len(plex))
     for _ in range(q):
         frog = heapq._heappop_max(plex)
         subplex.append(frog)
@@ -43,7 +43,11 @@ def select_submemeplex(original: list, q: int):
         if frog.coll > worst_frog.coll:
             worst_frog = frog
     
-    return (subplex, best_frog, worst_frog)
+    return (subplex, best_frog, worst_frog)'''
+
+    plex = random.sample(original, q)
+    plex.sort(key = lambda Frog: Frog.coll)
+    return plex, plex[0], plex[q-1]
 
 
 # We try to improve the frog by taking the 3 rows or columns from the best frog

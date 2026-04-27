@@ -34,9 +34,9 @@ def SFLA(F, M, Q, N, S, fixed):
    global improve_by_global_count
    global improve_by_random_count
 
-   for _ in range(S): 
+   for i in range(S): 
       memeplexes, global_best = partition_memeplexes(all_frogs, M)
-
+      if i == 0: global_best.print_board()
       if global_best.coll == 0:
          return global_best
 
@@ -66,11 +66,11 @@ def SFLA(F, M, Q, N, S, fixed):
 # Reads input
 fixed, max_solutions = read_input()
 
-F = 100           # total frogs
-M = 5           # memeplexes
-Q = 10           # submemeplex size
+F = 1000           # total frogs
+M = 10           # memeplexes
+Q = F//M//2           # submemeplex size
 N = 100           # evolution steps
-S = 20           # number of times the memeplexes are shuffled
+S = 200           # number of times the memeplexes are shuffled
 
 #assert S * N * M + F <= max_solutions
 

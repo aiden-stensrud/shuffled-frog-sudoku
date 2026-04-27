@@ -46,6 +46,8 @@ class Frog:
     def evaluate(self):
         # count collisions
         collisions = 0
+        self.row_colls = [0, 0, 0]
+        self.col_colls = [0, 0, 0]
 
         for i in range(9):
             unique_row = set()
