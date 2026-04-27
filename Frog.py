@@ -1,18 +1,23 @@
 import random
 
 class Frog:
-    def __init__(self, fixed: list, id = None):
-        self.random_grid(fixed)
-        self.key = None
-        self.coll = None
+    def __init__(self, fixed: list = None):
         self.row_colls = [0, 0, 0]
         self.col_colls = [0, 0, 0]
-        self.id = id
+        self.key = None
+        self.coll = None
+        self.board = None
+        self.random_grid(fixed)
 
-        self.evaluate()
+        #self.id = id
+
 
 
     def random_grid(self, fixed: list):
+
+        if fixed is None:
+            return
+
         self.board = [[0] * 9 for _ in range(9)]
 
         for i in range (0, 9, 3):
@@ -35,6 +40,7 @@ class Frog:
                         count += 1
                     else:
                         self.board[row][col] = arr[k - count]
+        self.evaluate()
 
 
     def evaluate(self):
@@ -69,7 +75,7 @@ class Frog:
                 print("---------------------")
 
         print()
-        print(eval(self.board))
+        print(self.coll)
         print()
 
 

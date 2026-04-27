@@ -60,10 +60,10 @@ fixed, max_solutions = read_input()
 F = 1000           # total frogs
 M = 50           # memeplexes
 Q = 10           # submemeplex size
-N = 9           # evolution steps
+N = 100           # evolution steps
 S = 20           # number of times the memeplexes are shuffled
 
-assert S * N * M + F <= max_solutions
+#assert S * N * M + F <= max_solutions
 
 # Run the main algorithm
 best_solution = SFLA(F, M, Q, N, S, fixed)

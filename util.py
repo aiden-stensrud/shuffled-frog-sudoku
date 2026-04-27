@@ -1,4 +1,5 @@
 import random, heapq
+from Frog import Frog
 
 # generates a standard sudoku board that has self-consistent 3x3 boxes
 def generate_board(fixed: list):
@@ -28,22 +29,6 @@ def generate_board(fixed: list):
     return board
 
 
-# returns the number of collisions
-def eval(board: list):
-    collisions = 0
-
-    for i in range(9):
-        uniqueRow = set()
-        uniqueCol = set()
-        for j in range(9):
-            uniqueRow.add(board[i][j])
-            uniqueCol.add(board[j][i])
-        collisions += (9 - len(uniqueRow)) + (9 - len(uniqueCol))
-
-
-    return collisions
-
-
 '''
 Swap will swap the 3x3 blocks given as a list argument labeled as:
 
@@ -53,16 +38,17 @@ Swap will swap the 3x3 blocks given as a list argument labeled as:
 -----
 7|8|9
 '''
-def swap(copy: list, target: list, swaps: list):
+def swap(copy, target, swaps: list):
     # create a new board since we may not use the changed one
-    result = copy_board(target)
+    result = Frog()
+    result.board = copy_board(target.board)
     for swap in swaps:
         # top left corner of the given 3x3
         row = 3 * ((swap - 1) // 3)
         col = 3 * ((swap - 1) % 3)
         for i in range(row, row + 3):
             for j in range(col, col + 3):
-                result[i][j] = copy[i][j]
+                result.board[i][j] = copy.board[i][j]
 
     return result
 
@@ -94,7 +80,7 @@ def subplex(plex: list, q: int):
     return subplex
 
 
-def copy_board(original: list):
+def copy_board(original):
     copy = [[0] * 9 for _ in range(9)]
     for i in range(9):
         for j in range(9):

@@ -52,13 +52,13 @@ def improve_frog(worst: Frog, best: Frog):
     max_diff = 0
     to_swap = (0, 1)
     for i in range(3):
-        if worst.row_colls - best.row_colls > max_diff:
-            max_diff = worst.row_colls - best.row_colls
+        if worst.row_colls[i] - best.row_colls[i] > max_diff:
+            max_diff = worst.row_colls[i] - best.row_colls[i]
             to_swap = (i, 1)
 
     for i in range(3):
-        if worst.col_colls - best.col_colls > max_diff:
-            max_diff = worst.col_colls - best.col_colls
+        if worst.col_colls[i] - best.col_colls[i] > max_diff:
+            max_diff = worst.col_colls[i] - best.col_colls[i]
             to_swap = (i, 3)
 
     swaps = [to_swap[0] + x * to_swap[1] for x in range(3)]
