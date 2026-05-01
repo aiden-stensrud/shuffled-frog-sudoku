@@ -4,6 +4,7 @@ class Frog:
     def __init__(self, fixed: list = None):
         self.row_colls = [0, 0, 0]
         self.col_colls = [0, 0, 0]
+        self.coll_cells = None
         self.key = None
         self.coll = None
         self.board = None
@@ -49,10 +50,29 @@ class Frog:
         self.row_colls = [0, 0, 0]
         self.col_colls = [0, 0, 0]
 
+        self.collision_cells = []
+        row_seen = {}
+        col_seen = {}
+
         for i in range(9):
             unique_row = set()
             unique_col = set()
             for j in range(9):
+
+                # gets collision indices for rows
+                if self.board[i][j] in row_seen:
+                    self.collision_cells.append((i,j))
+                    self.collision_cells.append((i, row_seen[self.board[i][j]]))
+                else:
+                    row_seen[self.board[i][j]] = j
+
+                # gets collision indices for cols
+                if self.board[j][i] in col_seen:
+                    self.collision_cells.append((j,i))
+                    self.collision_cells.append((col_seen[self.board[j][i]], i))
+                else:
+                    col_seen[self.board[j][i]] = j
+
                 unique_row.add(self.board[i][j])
                 unique_col.add(self.board[j][i])
             collisions += (9 - len(unique_row)) + (9 - len(unique_col))

@@ -38,7 +38,7 @@ Swap will swap the 3x3 blocks given as a list argument labeled as:
 -----
 7|8|9
 '''
-def swap(copy, target, swaps: list):
+def swap_box(copy, target, swaps: list):
     # create a new board since we may not use the changed one
     result = Frog()
     result.board = copy_board(target.board)
@@ -51,6 +51,14 @@ def swap(copy, target, swaps: list):
                 result.board[i][j] = copy.board[i][j]
 
     return result
+
+def swap_cell(copy, target, swap):
+    result = Frog()
+    result.board = copy_board(target.board)
+    row, col = swap
+    result.board[row][col] = copy.board[row][col]
+    return result
+        
 
 
 # reads a sudoku board from a given 81 digit number

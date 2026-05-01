@@ -1,5 +1,5 @@
 from Frog import Frog
-from util import swap
+from util import swap_box, swap_cell
 from copy import deepcopy
 import random, heapq
 
@@ -53,7 +53,8 @@ def select_submemeplex(original: list, q: int):
 # We try to improve the frog by taking the 3 rows or columns from the best frog
 # that have the largest difference in collisions with the worst frog
 def improve_frog(worst: Frog, best: Frog):
-    # decide which parts of the frog to improve
+
+    # decide which parts of the frog to improve  by choosing 3 subgrids
     '''max_diff = 0
     to_swap = (0, 1)
     for i in range(3):
@@ -69,9 +70,18 @@ def improve_frog(worst: Frog, best: Frog):
     swaps = [to_swap[0] + x * to_swap[1] for x in range(3)]'''
 
     
-    swaps = [random.randint(1,9)]
+    # Optional staging 
+    '''if best.coll > 22:
+        new_frog = swap_box(best, worst, swaps)
+    elif best.coll > 7:
+        swaps = [random.randint(1,9)]
+        new_frog = swap_box(best, worst, swaps)
+    else:
+        swap = worst.collision_cells[random.randint(0, len(worst.collision_cells)-1)]
+        new_frog = swap_cell(best, worst, swap)'''
 
-    new_frog = swap(best, worst, swaps)
+    swaps = [random.randint(1,9)]
+    new_frog = swap_box(best, worst, swaps)
     new_frog.evaluate()
     return new_frog
 
