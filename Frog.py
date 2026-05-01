@@ -5,13 +5,13 @@ class Frog:
         self.row_colls = [0, 0, 0]
         self.col_colls = [0, 0, 0]
         self.coll_cells = None
+        self.subgrid_coll = [0 for _ in range(10)]
         self.key = None
         self.coll = None
         self.board = None
         self.random_grid(fixed)
 
         #self.id = id
-
 
 
     def random_grid(self, fixed: list):
@@ -47,29 +47,34 @@ class Frog:
     def evaluate(self):
         # count collisions
         collisions = 0
+        self.subgrid_coll = [0 for _ in range(9)]
         self.row_colls = [0, 0, 0]
         self.col_colls = [0, 0, 0]
 
         self.collision_cells = []
-        row_seen = {}
-        col_seen = {}
 
         for i in range(9):
             unique_row = set()
             unique_col = set()
+            row_seen = {}
+            col_seen = {}
             for j in range(9):
 
                 # gets collision indices for rows
                 if self.board[i][j] in row_seen:
                     self.collision_cells.append((i,j))
-                    self.collision_cells.append((i, row_seen[self.board[i][j]]))
+                    if row_seen[self.board[i][j]] >= 0:
+                        self.collision_cells.append((i, row_seen[self.board[i][j]]))
+                    row_seen[self.board[i][j]] = -1
                 else:
                     row_seen[self.board[i][j]] = j
 
                 # gets collision indices for cols
                 if self.board[j][i] in col_seen:
                     self.collision_cells.append((j,i))
-                    self.collision_cells.append((col_seen[self.board[j][i]], i))
+                    if col_seen[self.board[j][i]] >= 0:
+                        self.collision_cells.append((col_seen[self.board[j][i]], i))
+                    col_seen[self.board[j][i]] = -1
                 else:
                     col_seen[self.board[j][i]] = j
 
@@ -82,6 +87,9 @@ class Frog:
             self.col_colls[i // 3] += 9 - len(unique_col)
 
         self.coll = collisions
+
+        for cell in self.collision_cells:
+            self.subgrid_coll[(cell[0] - (cell[0] % 3)) + (cell[1] // 3)] += 1
    
 
 

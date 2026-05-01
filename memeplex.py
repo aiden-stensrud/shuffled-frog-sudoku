@@ -80,8 +80,13 @@ def improve_frog(worst: Frog, best: Frog):
         swap = worst.collision_cells[random.randint(0, len(worst.collision_cells)-1)]
         new_frog = swap_cell(best, worst, swap)'''
 
-    swaps = [random.randint(1,9)]
-    new_frog = swap_box(best, worst, swaps)
+    max_diff = 0
+    diff_index = random.randint(1, 9)
+    for i in range(9):
+        if worst.subgrid_coll[i] - best.subgrid_coll[i] > max_diff:
+            max_diff = worst.subgrid_coll[i] - best.subgrid_coll[i]
+            diff_index = i + 1
+    new_frog = swap_box(best, worst, [diff_index])
     new_frog.evaluate()
     return new_frog
 

@@ -78,8 +78,8 @@ fixed, max_solutions = read_input()
 F = 1000         # total frogs
 M = 10           # memeplexes
 Q = F//M//2      # submemeplex size
-N = 100          # evolution steps
-S = 200          # number of times the memeplexes are shuffled
+N = 80         # evolution steps
+S = 80          # number of times the memeplexes are shuffled
 
 #assert S * N * M + F <= max_solutions
 
