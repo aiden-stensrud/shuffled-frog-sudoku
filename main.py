@@ -6,9 +6,7 @@ improve_by_local_count = 0
 improve_by_global_count = 0
 improve_by_random_count = 0
 
-def read_input():
-   board_string = input()
-   solutions = int(input())
+def read_input(board_string):
 
    board = []
    index = 0
@@ -24,9 +22,9 @@ def read_input():
          index += 1
 
       board.append(board_row)
-   return board, solutions
+   return board
 
-def SFLA(F, M, Q, N, S, fixed):
+def sfla(F, M, Q, N, S, fixed):
 
    # Initialize F new frogs
    all_frogs = [Frog(fixed) for _ in range(F)]
@@ -34,7 +32,7 @@ def SFLA(F, M, Q, N, S, fixed):
    total = 0
    for frog in all_frogs:
       total += frog.coll
-   print(f"The average number of collisions per frog at the start is: {total//F}\n")
+   #print(f"The average number of collisions per frog at the start is: {total//F}\n")
 
    global_best = None
    global improve_by_local_count
@@ -43,9 +41,9 @@ def SFLA(F, M, Q, N, S, fixed):
 
    for i in range(S): 
       memeplexes, global_best = partition_memeplexes(all_frogs, M)
-      if i == 0: 
-         print(f"Global best frog before evolution:")
-         global_best.print_board()
+      #if i == 0: 
+         #print(f"Global best frog before evolution:")
+         #global_best.print_board()
       if global_best.coll == 0:
          return global_best
 
@@ -71,25 +69,27 @@ def SFLA(F, M, Q, N, S, fixed):
 
    return global_best
 
+if __name__ == "__main__":
+   # Reads input
+   board_string = input()
+   solutions = int(input())
+   fixed = read_input(board_string)
 
-# Reads input
-fixed, max_solutions = read_input()
+   F = 1000         # total frogs
+   M = 10           # memeplexes
+   Q = F//M//2      # submemeplex size
+   N = 80          # evolution steps
+   S = 80          # number of times the memeplexes are shuffled
 
-F = 1000         # total frogs
-M = 10           # memeplexes
-Q = F//M//2      # submemeplex size
-N = 80         # evolution steps
-S = 80          # number of times the memeplexes are shuffled
+   #assert S * N * M + F <= max_solutions
 
-#assert S * N * M + F <= max_solutions
+   start_time = time.perf_counter()
 
-start_time = time.perf_counter()
+   # Run the main algorithm
+   best_solution = sfla(F, M, Q, N, S, fixed)
 
-# Run the main algorithm
-best_solution = SFLA(F, M, Q, N, S, fixed)
+   end_time = time.perf_counter()
 
-end_time = time.perf_counter()
-
-# Prints the output
-print(f"Global best num. collisions: {best_solution.coll}")
-print(f"Algorithm completed in {end_time - start_time} seconds")
+   # Prints the output
+   #print(f"Global best num. collisions: {best_solution.coll}")
+   #print(f"Algorithm completed in {end_time - start_time} seconds")
