@@ -109,3 +109,6 @@ class Frog:
     def __lt__(self, other: "Frog"):
         return self.key < other.key
 
+    def get_collisions(self):
+        return self.coll
+

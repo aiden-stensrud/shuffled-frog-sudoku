@@ -1,5 +1,6 @@
 from memeplex import partition_memeplexes, select_submemeplex, improve_submemeplex
 from Frog import Frog
+import time
 
 improve_by_local_count = 0
 improve_by_global_count = 0
@@ -74,20 +75,21 @@ def SFLA(F, M, Q, N, S, fixed):
 # Reads input
 fixed, max_solutions = read_input()
 
-F = 1000           # total frogs
+F = 1000         # total frogs
 M = 10           # memeplexes
-Q = F//M//2           # submemeplex size
+Q = F//M//2      # submemeplex size
 N = 100          # evolution steps
 S = 200          # number of times the memeplexes are shuffled
 
 #assert S * N * M + F <= max_solutions
 
+start_time = time.perf_counter()
+
 # Run the main algorithm
 best_solution = SFLA(F, M, Q, N, S, fixed)
 
+end_time = time.perf_counter()
+
 # Prints the output
-print(f"Global best frog after evolution:")
-best_solution.print_board()
-print(f"improve by local count: {improve_by_local_count}")
-print(f"improve by global count: {improve_by_global_count}")
-print(f"improve by random count: {improve_by_random_count}")
+print(f"Global best num. collisions: {best_solution.coll}")
+print(f"Algorithm completed in {end_time - start_time} seconds")
