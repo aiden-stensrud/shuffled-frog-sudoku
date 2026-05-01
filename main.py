@@ -91,5 +91,7 @@ if __name__ == "__main__":
    end_time = time.perf_counter()
 
    # Prints the output
-   #print(f"Global best num. collisions: {best_solution.coll}")
-   #print(f"Algorithm completed in {end_time - start_time} seconds")
+   print(f"-------------------------------------")
+   print(f"The best solution found is:\n")
+   best_solution.print_board()
+   print(f"Algorithm completed in {int(end_time - start_time)} seconds")
