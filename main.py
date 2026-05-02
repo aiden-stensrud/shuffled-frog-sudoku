@@ -1,6 +1,7 @@
 from memeplex import partition_memeplexes, select_submemeplex, improve_submemeplex
 from Frog import Frog
 import time
+import math
 
 improve_by_local_count = 0
 improve_by_global_count = 0
@@ -75,13 +76,13 @@ if __name__ == "__main__":
    solutions = int(input())
    fixed = read_input(board_string)
 
-   F = 1000         # total frogs
-   M = 10           # memeplexes
+   F = solutions//100         # total frogs
+   M = F//25           # memeplexes
    Q = F//M//2      # submemeplex size
-   N = 80          # evolution steps
-   S = 80          # number of times the memeplexes are shuffled
+   N = math.floor(math.sqrt((solutions - F)/M))          # evolution steps
+   S = N          # number of times the memeplexes are shuffled
 
-   #assert S * N * M + F <= max_solutions
+   assert S * N * M + F <= solutions
 
    start_time = time.perf_counter()
 
